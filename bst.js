@@ -78,7 +78,24 @@ export default class Tree {
     return root;
   }
 
-  insert(value) {}
+  insert(value) {
+    let current = this.root;
+    let parent = null;
+    while (current) {
+      parent = current;
+      if (value < current.value) {
+        current = current.leftCh;
+      } else {
+        current = current.rightCh;
+      }
+    }
+
+    if (value < parent.value) {
+      parent.leftCh = new Node(value);
+    } else {
+      parent.rightCh = new Node(value);
+    }
+  }
 
   deleteItem(value) {}
 

@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class Tree {
+export default class Tree {
   constructor(list) {
     this.array = this.sortArr(list);
     this.root = this.buildTree(this.array, 0, this.array.length - 1);

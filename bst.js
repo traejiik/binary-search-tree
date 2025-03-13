@@ -1,8 +1,8 @@
 class Node {
-  constructor(vale, left = null, right = null) {
+  constructor(vale) {
     this.value = vale;
-    this.leftCh = left;
-    this.rightCh = right;
+    this.leftCh = null;
+    this.rightCh = null;
   }
 }
 
@@ -67,7 +67,16 @@ export default class Tree {
     return merge(sortedLeft, sortedRight);
   }
 
-  buildTree(array) {}
+  buildTree(array, start, end) {
+    if (start > end) return null;
+    const mid = Math.floor((start + end) / 2);
+
+    const root = new Node(array[mid]);
+    root.leftCh = this.buildTree(array, start, mid - 1);
+    root.rightCh = this.buildTree(array, mid + 1, array.length - 1);
+
+    return root;
+  }
 
   insert(value) {}
 

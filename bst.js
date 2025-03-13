@@ -27,20 +27,41 @@ export default class Tree {
       const sorted = [];
       let leftIndex = 0;
       let rightIndex = 0;
+      let lastAdded = null;
 
       while (leftIndex < left.length && rightIndex < right.length) {
         if (left[leftIndex] < right[rightIndex]) {
-          sorted.push(left[leftIndex]);
+          if (left[leftIndex] !== lastAdded) {
+            sorted.push(left[leftIndex]);
+            lastAdded = left[leftIndex];
+          }
           leftIndex++;
         } else {
-          sorted.push(right[rightIndex]);
+          if (right[rightIndex] !== lastAdded) {
+            sorted.push(right[rightIndex]);
+            lastAdded = right[rightIndex];
+          }
           rightIndex++;
         }
       }
 
-      return sorted
-        .concat(left.slice(leftIndex))
-        .concat(right.slice(rightIndex));
+      while (leftIndex < left.length) {
+        if (left[leftIndex] !== lastAdded) {
+          sorted.push(left[leftIndex]);
+          lastAdded = left[leftIndex];
+        }
+        leftIndex++;
+      }
+
+      while (rightIndex < right.length) {
+        if (right[rightIndex] !== lastAdded) {
+          sorted.push(right[rightIndex]);
+          lastAdded = right[rightIndex];
+        }
+        rightIndex++;
+      }
+
+      return sorted;
     }
 
     return merge(sortedLeft, sortedRight);

@@ -150,7 +150,18 @@ export default class Tree {
     return `${value} deleted`;
   }
 
-  find(value) {}
+  find(value) {
+    let current = this.root;
+    while (value !== current.value) {
+      if (value < current.value) {
+        current = current.leftCh;
+      } else {
+        current = current.rightCh;
+      }
+    }
+    if (!current) return `${value} not found`;
+    return current;
+  }
 
   levelOrder(callback) {}
 

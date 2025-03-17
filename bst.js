@@ -164,6 +164,8 @@ export default class Tree {
   }
 
   levelOrder(callback) {
+    if (!callback) throw new Error('No callback function has been passed');
+
     const queue = [this.root];
 
     while (queue.length > 0) {
@@ -175,11 +177,32 @@ export default class Tree {
     }
   }
 
-  inOrder(callback) {}
+  inOrder(callback, root = this.root) {
+    if (!callback) throw new Error('No callback function has been passed');
 
-  preOrder(callback) {}
+    if (root === null) return;
+    this.inOrder(callback, root.leftCh);
+    callback(root);
+    this.inOrder(callback, root.rightCh);
+  }
 
-  postOrder(callback) {}
+  preOrder(callback, root = this.root) {
+    if (!callback) throw new Error('No callback function has been passed');
+
+    if (root === null) return;
+    callback(root);
+    this.preOrder(callback, root.leftCh);
+    this.preOrder(callback, root.rightCh);
+  }
+
+  postOrder(callback, root = this.root) {
+    if (!callback) throw new Error('No callback function has been passed');
+
+    if (root === null) return;
+    this.postOrder(callback, root.leftCh);
+    this.postOrder(callback, root.rightCh);
+    callback(root);
+  }
 
   height(node) {}
 

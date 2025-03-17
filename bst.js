@@ -97,7 +97,58 @@ export default class Tree {
     }
   }
 
-  deleteItem(value) {}
+  deleteItem(value) {
+    let parent = null;
+    let current = this.root;
+    while (value !== current.value) {
+      parent = current;
+      if (value < current.value) {
+        current = current.leftCh;
+      } else {
+        current = current.rightCh;
+      }
+    }
+    if (!current) return `${value} not found`;
+
+    const leftEl = current.leftCh;
+    const rightEl = current.rightCh;
+    if (!leftEl && !rightEl) {
+      if (current === parent.leftCh) {
+        parent.leftCh = null;
+      } else {
+        parent.rightCh = null;
+      }
+    } else if (!leftEl) {
+      if (current === parent.leftCh) {
+        parent.leftCh = rightEl;
+      } else {
+        parent.rightCh = rightEl;
+      }
+    } else if (!rightEl) {
+      if (current === parent.leftCh) {
+        parent.leftCh = leftEl;
+      } else {
+        parent.rightCh = leftEl;
+      }
+    } else {
+      let successorParent = current;
+      let successor = rightEl;
+
+      while (successor.leftCh) {
+        successorParent = successor;
+        successor = successor.leftCh;
+      }
+      current.value = successor.value;
+
+      if (successorParent.leftCh === successor) {
+        successorParent.leftCh = successor.rightCh;
+      } else {
+        successorParent.rightCh = successor.rightCh;
+      }
+    }
+
+    return `${value} deleted`;
+  }
 
   find(value) {}
 

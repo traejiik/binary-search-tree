@@ -163,7 +163,17 @@ export default class Tree {
     return current;
   }
 
-  levelOrder(callback) {}
+  levelOrder(callback) {
+    const queue = [this.root];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      callback(current);
+
+      if (current.leftCh) queue.push(current.leftCh);
+      if (current.rightCh) queue.push(current.rightCh);
+    }
+  }
 
   inOrder(callback) {}
 
@@ -179,16 +189,3 @@ export default class Tree {
 
   rebalance() {}
 }
-
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-  }
-  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-  }
-};

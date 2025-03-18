@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 class Node {
   constructor(vale) {
     this.value = vale;
@@ -73,7 +74,7 @@ export default class Tree {
 
     const root = new Node(array[mid]);
     root.leftCh = this.buildTree(array, start, mid - 1);
-    root.rightCh = this.buildTree(array, mid + 1, array.length - 1);
+    root.rightCh = this.buildTree(array, mid + 1, end);
 
     return root;
   }
@@ -204,11 +205,45 @@ export default class Tree {
     callback(root);
   }
 
-  height(node) {}
+  height(node) {
+    if (!node) return -1;
+    return 1 + Math.max(this.height(node.leftCh), this.height(node.rightCh));
+  }
 
-  depth(node) {}
+  depth(node) {
+    let current = this.root;
+    let depth = 0;
+    while (current !== node) {
+      depth++;
+      if (node.value < current.value) {
+        current = current.leftCh;
+      } else {
+        current = current.rightCh;
+      }
+      if (!current) return -1;
+    }
+    return depth;
+  }
 
-  isBalanced() {}
+  isBalanced(node = this.root) {
+    if (!node) return true;
+    const balanceFactor = Math.abs(
+      this.height(node.leftCh) - this.height(node.rightCh),
+    );
+    return (
+      balanceFactor <= 1 &&
+      this.isBalanced(node.leftCh) &&
+      this.isBalanced(node.rightCh)
+    );
+  }
 
-  rebalance() {}
+  rebalance() {
+    if (this.isBalanced()) return;
+
+    console.log('rebalancing tree...');
+    const nodes = [];
+    this.inOrder((node) => nodes.push(node.value));
+    this.array = this.sortArr(nodes);
+    this.root = this.buildTree(this.array, 0, this.array.length - 1);
+  }
 }

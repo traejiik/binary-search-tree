@@ -30,7 +30,6 @@ pN(tree.isBalanced());
 prettyPrint(tree.root);
 
 // print out elements
-/*
 pN('Level Order');
 pN(tree.levelOrder(pNv));
 pN(' ');
@@ -42,7 +41,6 @@ pN(tree.postOrder(pNv));
 pN(' ');
 pN('Inorder');
 pN(tree.inOrder(pNv));
-*/
 
 // insert elements to unbalance tree
 for (let i = 0; i < 20; i++) {
@@ -57,7 +55,6 @@ prettyPrint(tree.root);
 pN(tree.isBalanced());
 
 // print out elements
-/*
 pN('Level Order');
 pN(tree.levelOrder(pNv));
 pN(' ');
@@ -69,4 +66,3 @@ pN(tree.postOrder(pNv));
 pN(' ');
 pN('Inorder');
 pN(tree.inOrder(pNv));
-*/
